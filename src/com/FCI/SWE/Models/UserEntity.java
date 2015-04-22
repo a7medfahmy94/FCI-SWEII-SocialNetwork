@@ -30,6 +30,9 @@ public class UserEntity {
 	@Id private static  String email;
     @Index private String name;
     @Index private Long timelineID;
+    @Index private ArrayList<Long>owenedGroups;
+    @Index private ArrayList<Long>joinedGroups;
+    
     private String password;
     
     public UserEntity(){
@@ -47,6 +50,7 @@ public class UserEntity {
     	this.name = name;
         this.email = email;
         this.password = password;
+        
     }
 
     /**
