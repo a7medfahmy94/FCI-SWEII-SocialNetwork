@@ -30,8 +30,8 @@ public class UserEntity {
 	@Id private static  String email;
     @Index private String name;
     @Index private Long timelineID;
-    @Index private ArrayList<Long>owenedGroups;
-    @Index private ArrayList<Long>joinedGroups;
+    @Index private static ArrayList<Long>owenedGroups;
+    @Index private static ArrayList<Long>joinedGroups;
     
     private String password;
     
@@ -50,7 +50,8 @@ public class UserEntity {
     	this.name = name;
         this.email = email;
         this.password = password;
-        
+        this.owenedGroups = new ArrayList();
+        this.joinedGroups = new ArrayList();
     }
 
     /**
@@ -172,7 +173,30 @@ public class UserEntity {
     public static String getUserEmail(){
     	return UserEntity.email;
     }
-   
+    /**
+     * @author Rania Sayed
+     * 
+     * this method allow user to Create New group
+     */
+    public static boolean createGroup(String groupName,String groupPrivacy){
+    	
+    	UserEntity.owenedGroups.add(new Group(groupName,groupPrivacy).save());
+    	
+    	return true;
+    	
+    }
+    
+    /**
+     * @author Rania Sayed
+     * 
+     * @param grID
+     * 
+     * this method allow user to Join Existing group
+     */
+   public static void joinGroup(Long grID){
+	   
+	   UserEntity.joinedGroups.add(grID);
+   }
   
 
 }

@@ -15,18 +15,31 @@ public class Group {
 
 	@Id private Long id;
 	//private ArrayList<userPost> grPosts = new ArrayList();
+	private String name;
+	private String privacy;
 	
-	public void save(){
-		ofy().save().entity(this).now();
+	public Group(String grName,String grPrivacy){
+		name = grName;
+		privacy=grPrivacy;
+				
 	}
+	public Long save(){
+		ofy().save().entity(this).now();
+		return id;
+	}
+
 	public Long getId(){
 		
 		return id;
 	}
+	
+	
 	static public Group getGroupByID(Long id){
 		return ofy().load().type(Group.class).
 				filter("id",id).first().now();	
 	}
+
+	
 	
 	
 	
