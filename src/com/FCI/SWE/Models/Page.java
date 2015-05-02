@@ -58,6 +58,9 @@ public class Page {
 	public UserEntity getOwner(){
 		return UserEntity.getUserByEMail(ownerEmail);
 	}
+	public long getID(){
+		return id;
+	}
 	public void addFan(String fanEMail) {
 		numberOfLikes++;
 		fansEMails.add(fanEMail);

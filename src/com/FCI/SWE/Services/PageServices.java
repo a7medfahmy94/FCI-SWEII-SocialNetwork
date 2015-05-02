@@ -6,8 +6,10 @@ import com.FCI.SWE.Models.Page;
 import com.FCI.SWE.Models.UserEntity;
 
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
 import org.json.simple.JSONObject;
 
@@ -50,7 +52,23 @@ public class PageServices {
 		}
 		return obj.toString();
 	}
-
+	
+	
+	@GET
+    @Path("/GetIdByPageName")
+    public String getUserByName(@FormParam("name") String name) {
+        JSONObject obj = new JSONObject();
+        Page p = Page.SearchPageByName(name);
+        if (p == null) {
+            obj.put(status, failed);
+        } else {
+            obj.put(status, ok);
+            obj.put("ID", p.getID());
+        }
+        return obj.toString();
+    }
+	
+	
 	/**
 	 * 
 	 * @param email
