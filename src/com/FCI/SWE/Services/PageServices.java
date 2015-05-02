@@ -52,7 +52,12 @@ public class PageServices {
 		}
 		return obj.toString();
 	}
-	
+	/**
+	 * 
+	 * this service takes page name and returns page id
+	 * @param name
+	 * @return id
+	 */
 	
 	@GET
     @Path("/GetIdByPageName")
