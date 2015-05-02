@@ -52,27 +52,6 @@ public class PageServices {
 		}
 		return obj.toString();
 	}
-	/**
-	 * 
-	 * this service takes page name and returns page id
-	 * @param name
-	 * @return id
-	 */
-	
-	@GET
-    @Path("/GetIdByPageName")
-    public String getUserByName(@FormParam("name") String name) {
-        JSONObject obj = new JSONObject();
-        Page p = Page.SearchPageByName(name);
-        if (p == null) {
-            obj.put(status, failed);
-        } else {
-            obj.put(status, ok);
-            obj.put("ID", p.getID());
-        }
-        return obj.toString();
-    }
-	
 	
 	/**
 	 * 
@@ -83,11 +62,11 @@ public class PageServices {
 	@POST
 	@Path("/likePage")
 	public String likePage(@FormParam("email") String email,
-						   @FormParam("page_id") Long pId) {
+						   @FormParam("page_name") String pName) {
 		JSONObject obj = new JSONObject();
 
 		UserEntity u = UserEntity.getUserByEMail(email);
-		Page p = Page.SearchPageByID(pId);
+		Page p = Page.SearchPageByName(pName);
 		if (u == null || p == null) {
 			obj.put(status, failed);
 		} else {
@@ -101,11 +80,11 @@ public class PageServices {
 	@POST
 	@Path("/writePost/")
 	public String writePost(@FormParam("email") String email,
-							@FormParam("page_id") Long pId,
+							@FormParam("page_name") String pName,
 							@FormParam("post") String post) {
 		JSONObject obj = new JSONObject();
 		
-		Page p = Page.SearchPageByID(pId);
+		Page p = Page.SearchPageByName(pName);
 		UserEntity u = p.getOwner();
 		if (p == null || u == null || false==u.getEmail().equals(email)) {
 			obj.put(status, failed);
