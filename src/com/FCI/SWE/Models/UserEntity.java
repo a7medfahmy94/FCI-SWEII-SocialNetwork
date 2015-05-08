@@ -27,12 +27,14 @@ import static com.FCI.SWE.Models.OfyService.ofy;
 
 @Entity
 public class UserEntity {
-	@Id private String email;
+	@Id private static  String email;
     @Index private String name;
+    @Index private Long timelineID;
     private String password;
-
     
-    public UserEntity(){}
+    public UserEntity(){
+    	
+    }
     /**
      * Constructor accepts user data
      *
@@ -41,13 +43,12 @@ public class UserEntity {
      * @param password user provided password
      */
     public UserEntity(String name, String email, String password) {
-        this.name = name;
+        this.timelineID = new Timeline().save();
+    	this.name = name;
         this.email = email;
         this.password = password;
-
     }
 
-    
     /**
      * this method gets user name
      * @return name
@@ -70,29 +71,16 @@ public class UserEntity {
     public String getPass() {
         return password;
     }
-
+    
     /**
-     *
-     * This static method will form UserEntity class using json format contains
-     * user data
-     *
-     * @param json String in json format contains user data
-     * @return Constructed user entity
+     * this method will return the user's timeline
+     * 
+     * @return Timeline
      */
-    public static UserEntity getUser(String json) {
-
-        JSONParser parser = new JSONParser();
-        try {
-            JSONObject object = (JSONObject) parser.parse(json);
-            return new UserEntity(object.get("name").toString(), object.get(
-                    "email").toString(), object.get("password").toString());
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return null;
-
+    public Timeline getTimeline(){
+    	return Timeline.getTimelineByID(timelineID);
     }
+
 
     /**
      *
@@ -176,5 +164,11 @@ public class UserEntity {
 
         return true;
     }
+    
+    public static String getUserEmail(){
+    	return UserEntity.email;
+    }
+   
+  
 
 }
