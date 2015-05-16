@@ -47,9 +47,15 @@ public class UserPost extends PostsModel {
 		UserEntity u = UserEntity.getUserByEMail(email);
 		Timeline timeline = Timeline.getTimelineByID(Long.decode(timelineId));
 		JSONObject obj = new JSONObject();
+		// if user don't exist or timeline don't exist put status failed 
 		if(u == null || timeline == null){
 			obj.put(status,fail);	
-		}else{
+		}
+		// create a new post 
+		//if there's feeling set feeling 
+		//if it has privacy set privacy
+		// save the post and put status ok
+		else{
 			UserPostModel p = new UserPostModel(email,text,timeline.getID());
 			if(feeling != null)
 				p.setFeeling(feeling);

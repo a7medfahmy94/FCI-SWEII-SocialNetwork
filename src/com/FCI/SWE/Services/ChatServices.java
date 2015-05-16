@@ -32,11 +32,17 @@ public class ChatServices {
 						@FormParam("receiver")String receiver,
 						@FormParam("text")String text){
 		JSONObject obj = new JSONObject();
+<<<<<<< HEAD
 		
 		// check 2 users is friend
+=======
+		//if not friends put status failed
+>>>>>>> 2f288a8cdfb19e2a62118d97c9a0ca185d4bd0ed
 		if(!Friends.areFriends(sender, receiver)){
 			obj.put(status , failed);
-		}else{
+		}
+		//if friends send the message and put status ok 
+		else{
 			Chat.send(sender,receiver,text);
 			obj.put(status, ok);
 		}

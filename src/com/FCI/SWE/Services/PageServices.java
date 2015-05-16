@@ -43,9 +43,12 @@ public class PageServices {
 		JSONObject obj = new JSONObject();
 
 		UserEntity u = UserEntity.getUserByEMail(email);
+		//if user doesn't exist put status failed
 		if (u == null) {
 			obj.put(status, failed);
-		} else {
+		}
+		// if exists create a new page and save it to the DB and put status ok 
+		else {
 			new Page(pName, pType, pCateogry, email).save();
 			obj.put(status, ok);
 		}
@@ -66,9 +69,12 @@ public class PageServices {
 
 		UserEntity u = UserEntity.getUserByEMail(email);
 		Page p = Page.SearchPageByID(pId);
+		// if user don't exist or page don't exist put status failed
 		if (u == null || p == null) {
 			obj.put(status, failed);
-		} else {
+		}
+		//if both exists add fan to the page and save the page to DB and put status Ok
+		else {
 			obj.put(status, ok);
 			p.addFan(email);
 			p.save();
@@ -92,9 +98,15 @@ public class PageServices {
 		
 		Page p = Page.SearchPageByID(pId);
 		UserEntity u = p.getOwner();
+		//if page doesn't exists or user don't exist or the user is not the owner put status Failed
 		if (p == null || u == null || false==u.getEmail().equals(email)) {
 			obj.put(status, failed);
-		} else {
+		}
+		// else get page timeline 
+		// make an new page post for this page and save it 
+		// add the post to the timeline and save it 
+		// put status ok
+		else {
 			Timeline t = p.getPageTimeline();
 			PagePost pageP = new PagePost(post,t.getID());
 			pageP.save();
