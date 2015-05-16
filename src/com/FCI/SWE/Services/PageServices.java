@@ -1,3 +1,4 @@
+
 package com.FCI.SWE.Services;
 
 import com.FCI.SWE.Models.PagePost;
@@ -74,7 +75,14 @@ public class PageServices {
 		}
 		return obj.toString();
 	}
-
+	/*
+	 *  write posts in his timeline and pages
+	 *  
+	 *  @param email
+	 *  @param page_id
+	 *  @param post
+	 *  @return
+	 */
 	@POST
 	@Path("/writePost/")
 	public String writePost(@FormParam("email") String email,

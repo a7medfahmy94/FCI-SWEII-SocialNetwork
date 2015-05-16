@@ -17,6 +17,15 @@ public class ChatServices {
 	private String ok     = "OK";
 	private String failed = "Failed";
 	
+	
+	/*
+	 * send message 
+	 * 
+	 * @param sender
+	 * @param reciver
+	 * @param text
+	 * @return
+	 */
 	@POST
 	@Path("/send")
 	public String send(@FormParam("sender")String sender,
@@ -24,6 +33,7 @@ public class ChatServices {
 						@FormParam("text")String text){
 		JSONObject obj = new JSONObject();
 		
+		// check 2 users is friend
 		if(!Friends.areFriends(sender, receiver)){
 			obj.put(status , failed);
 		}else{

@@ -1,3 +1,4 @@
+
 package com.FCI.SWE.Services;
 
 import static com.FCI.SWE.Models.OfyService.ofy;
@@ -17,6 +18,7 @@ import com.FCI.SWE.Models.Timeline;
 import com.FCI.SWE.Models.UserEntity;
 import com.FCI.SWE.Models.UserPostModel;
 
+
 @Path("/post")
 public class UserPost extends PostsModel {
 	
@@ -24,6 +26,16 @@ public class UserPost extends PostsModel {
 	static private String ok = "OK";
 	static private String fail = "Failed";
 
+	/*
+	 * post of user in time line 
+	 * 
+	 * @Param email
+	 * @Param text
+	 * @Param feeling
+	 * @Param privacy
+	 * @Param timelineId
+	 * @return
+	 */
 	@POST
 	@Path("/userPost/")
 	public String userPost(@FormParam("email") String email,
