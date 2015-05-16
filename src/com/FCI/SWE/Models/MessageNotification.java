@@ -15,7 +15,7 @@ public class MessageNotification extends Notification{
 	@Index private String user_email;
 	private String sender_email;
 	private String text;
-	private Boolean read;
+	private Boolean isRead;
 	
 	public MessageNotification(){}
 	
@@ -23,7 +23,7 @@ public class MessageNotification extends Notification{
 		this.user_email = receiver;
 		this.sender_email = sender;
 		this.text = text;
-		this.read = false;
+		this.isRead = false;
 	}
 
 	public void save(){
@@ -36,7 +36,7 @@ public class MessageNotification extends Notification{
     	ret.addAll(ofy().load().type(MessageNotification.class).
     			filter("user_email",email).list());
     	for(MessageNotification m: ret){
-    		m.read = true;
+    		m.isRead = true;
     		m.save();
     	}
 		return ret;

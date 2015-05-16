@@ -39,13 +39,16 @@ public class Friends {
      */
 	public String getUserTwo(){return user_two;}
 
-	public static boolean areFriends(String u1,String u2){
-		Friends obj = ofy().load().type(Friends.class).filter("user_one",u1)
-			.filter("user_two",u2).first().now();
+	/*
+	 * this method check if 2 users are friends
+	 */
+	public static boolean areFriends(String user1,String user2){
+		Friends obj = ofy().load().type(Friends.class).filter("user_one",user1)
+			.filter("user_two",user2).first().now();
 		if(obj != null)return true;
 
-		obj = ofy().load().type(Friends.class).filter("user_one",u2)
-		.filter("user_two",u1).first().now();
+		obj = ofy().load().type(Friends.class).filter("user_one",user2)
+		.filter("user_two",user1).first().now();
 		if(obj != null)return true;
 		
 		return false;

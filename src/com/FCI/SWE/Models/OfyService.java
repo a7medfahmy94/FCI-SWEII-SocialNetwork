@@ -4,7 +4,9 @@ import com.FCI.SWE.Models.*;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
-
+/*
+ * data base class
+ */
 
 public class OfyService {
 	static {

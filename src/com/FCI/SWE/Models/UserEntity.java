@@ -30,6 +30,9 @@ public class UserEntity {
 	@Id private static  String email;
     @Index private String name;
     @Index private Long timelineID;
+    @Index private static ArrayList<Long>owenedGroups;
+    @Index private static ArrayList<Long>joinedGroups;
+    
     private String password;
     
     public UserEntity(){
@@ -47,6 +50,8 @@ public class UserEntity {
     	this.name = name;
         this.email = email;
         this.password = password;
+        this.owenedGroups = new ArrayList();
+        this.joinedGroups = new ArrayList();
     }
 
     /**
@@ -126,30 +131,30 @@ public class UserEntity {
     	return true;
     }
  /**
-  * this method sends a friend request from u1 to u2
-  * @param u1
-  * @param u2
+  * this method sends a friend request from user1 to user2
+  * @param user1
+  * @param user2
   * @return true if send false otherwise
   */
-    public static boolean sendFriendRequest(String u1, String u2) {
+    public static boolean sendFriendRequest(String user1, String user2) {
 
-    	if (getUserByEMail(u1) == null || getUserByEMail(u2) == null) {
+    	if (getUserByEMail(user1) == null || getUserByEMail(user2) == null) {
             return false;
         }
-    	if (Friends.areFriends(u1, u2))return false;
-    	if (FriendRequest.find(u1,u2))return false;
-    	ofy().save().entity(new FriendRequest(u1,u2)).now();
+    	if (Friends.areFriends(user1, user2))return false;
+    	if (FriendRequest.find(user1,user2))return false;
+    	ofy().save().entity(new FriendRequest(user1,user2)).now();
         return true;
     }
     /**
-     * this method accepts a friend request from u1 to u2
-     * @param u1
-     * @param u2
+     * this method accepts a friend request from user1 to user2
+     * @param user1
+     * @param user2
      * @return true if added to friends false otherwise
      */
-    public static boolean acceptFriendRequest(String u1, String u2) {
+    public static boolean acceptFriendRequest(String user1, String user2) {
     	FriendRequest ff = (FriendRequest)ofy().load().type(FriendRequest.class)
-    			.filter("user_two",u1).filter("user_one",u2).first().now();
+    			.filter("user_two",user1).filter("user_one",user2).first().now();
     	
         if (ff == null) {
             return false;
@@ -157,9 +162,9 @@ public class UserEntity {
         if(ff != null)
         	ofy().delete().entity(ff);
 
-        FriendRequestNotification.delete(u2,u1);
+        FriendRequestNotification.delete(user2,user1);
         
-        Friends nf = new Friends(u1,u2);
+        Friends nf = new Friends(user1,user2);
         ofy().save().entity(nf);
 
         return true;
@@ -168,7 +173,30 @@ public class UserEntity {
     public static String getUserEmail(){
     	return UserEntity.email;
     }
-   
+    /**
+     * @author Rania Sayed
+     * 
+     * this method allow user to Create New group
+     */
+    public static boolean createGroup(String groupName,String groupPrivacy){
+    	
+    	UserEntity.owenedGroups.add(new Group(groupName,groupPrivacy).save());
+    	
+    	return true;
+    	
+    }
+    
+    /**
+     * @author Rania Sayed
+     * 
+     * @param grID
+     * 
+     * this method allow user to Join Existing group
+     */
+   public static void joinGroup(Long groupID){
+	   
+	   UserEntity.joinedGroups.add(groupID);
+   }
   
 
 }

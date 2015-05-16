@@ -12,15 +12,15 @@ import static com.FCI.SWE.Models.OfyService.ofy;
 public class FriendRequestNotification extends Notification{
 	@Index private String receiver;
 	@Index private String sender;
-	@Id private Long friendRequestNotiID;
+	@Id private Long friendRequestNotificationID;
 	
 	@Ignore static String RECEIVER = "receiver";
 	@Ignore static String SENDER = "sender";
 
 	public FriendRequestNotification(){}
-	public FriendRequestNotification(String s,String r){
-		this.receiver = s;
-		this.sender = r;
+	public FriendRequestNotification(String receiver,String sender){
+		this.receiver = receiver;
+		this.sender = sender;
 	}
 
 	public void save(){
@@ -28,15 +28,17 @@ public class FriendRequestNotification extends Notification{
 	}
 
 	public static ArrayList<FriendRequestNotification> getListOfNotifications(String receiver){
-		ArrayList<FriendRequestNotification> ret = new ArrayList<FriendRequestNotification>();
-    	ret.addAll(ofy().load().type(FriendRequestNotification.class).
+		ArrayList<FriendRequestNotification> listOfNotification = new ArrayList<FriendRequestNotification>();
+		listOfNotification.addAll(ofy().load().type(FriendRequestNotification.class).
     			filter(RECEIVER,receiver).list());
-		return ret;
+		return listOfNotification;
 	}
 	public String getSender(){
 		return this.sender;
 	}
-	
+	/*
+	 * this method delete FriendRequestNotification
+	 */
 	public static void delete(String sender,String receiver){
 		FriendRequestNotification f = 
 		ofy().load().type(FriendRequestNotification.class).

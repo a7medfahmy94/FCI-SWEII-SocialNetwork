@@ -13,17 +13,20 @@ import com.googlecode.objectify.annotation.Index;
 public class Timeline {
 	@Id private Long id;	
 	ArrayList<Long> allPosts;
-	
+	/*
+	 * empty constructor
+	 */
 	public Timeline(){
 		
 	}
+	
 	public static Timeline getTimelineByID(Long id){
 		return ofy().load().type(Timeline.class).
 				filter("id",id).first().now();	
 	}
 	
-	public void addPost(Long l){
-		allPosts.add(l);
+	public void addPost(Long id){
+		allPosts.add(id);
 	}
 	public Long save(){
 		ofy().save().entity(this).now();

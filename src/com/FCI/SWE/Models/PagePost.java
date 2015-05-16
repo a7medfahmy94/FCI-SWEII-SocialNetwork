@@ -17,6 +17,7 @@ public class PagePost extends PostsModel {
 	@Index private Long timelineId;
 
 	public PagePost() {}
+	
 	public PagePost(String t) {
 		super(t);
 	}
@@ -27,8 +28,8 @@ public class PagePost extends PostsModel {
 	public static PagePost getPost(Long id){
 		return ofy().load().type(PagePost.class).id(id).now();
 	}
-	public void setTimelineId(Long l){
-		timelineId = l;
+	public void setTimelineId(Long id){
+		timelineId = id;
 	}
 	public Long getId(){
 		return id;
